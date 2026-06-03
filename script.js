@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initScrollEffects();
   initStatsCounter();
   initCardGlowEffect();
+  initProjectCardToggle();
   initContactForm();
   initMobileMenu();
   initResumeDownload();
@@ -481,6 +482,40 @@ function initCardGlowEffect() {
   });
 }
 
+function initProjectCardToggle() {
+  const projectCards = Array.from(document.querySelectorAll('.projects-grid .project-card'));
+  if (projectCards.length < 2) return;
+
+  let visibleCount = 1;
+  projectCards.slice(1).forEach(card => card.classList.add('hidden-card'));
+
+  const instruction = document.querySelector('.project-instruction');
+  if (instruction) {
+    instruction.classList.add('highlight');
+    instruction.innerHTML = '<span class="project-instruction-action">Click on project</span> to view more.';
+  }
+
+  projectCards[0].classList.add('revealed-card');
+
+  projectCards[0].addEventListener('click', () => {
+    if (visibleCount >= projectCards.length) return;
+
+    const nextCard = projectCards[visibleCount];
+    nextCard.classList.remove('hidden-card');
+    nextCard.classList.add('revealed-card');
+    visibleCount += 1;
+
+    if (instruction) {
+      if (visibleCount === projectCards.length) {
+        instruction.textContent = 'All featured projects are now visible.';
+        instruction.classList.remove('highlight');
+      } else {
+        instruction.textContent = 'Nice! Click again to view the next project.';
+      }
+    }
+  });
+}
+
 /**
  * 9. Mobile Menu Hamburg Toggle
  */
@@ -606,7 +641,7 @@ function initResumeDownload() {
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
-        a.download = 'Veeta_Reddy_Resume.pdf';
+        a.download = 'podduturu_veeta_reddy-resume.pdf';
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);

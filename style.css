@@ -1044,8 +1044,8 @@ section {
 /* 4. Skills Section */
 .skills-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 30px;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
 }
 
 .skills-card {
@@ -1057,10 +1057,10 @@ section {
 .skills-card-header {
   display: flex;
   align-items: center;
-  gap: 15px;
-  margin-bottom: 30px;
+  gap: 12px;
+  margin-bottom: 18px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-  padding-bottom: 15px;
+  padding-bottom: 12px;
 }
 
 .skills-card-header svg {
@@ -1076,7 +1076,7 @@ section {
 .skills-list {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 14px;
   flex-grow: 1;
 }
 
@@ -1121,6 +1121,141 @@ section {
   box-shadow: 0 0 10px rgba(0, 242, 254, 0.2);
 }
 
+.skills-card {
+  position: relative;
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+  overflow: hidden;
+}
+
+.skills-card:hover {
+  transform: translateY(-12px);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.22);
+}
+
+.skills-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.04), transparent 40%, rgba(255, 255, 255, 0.06) 70%);
+  pointer-events: none;
+}
+
+.skills-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at top left, rgba(255, 255, 255, 0.16), transparent 22%);
+  opacity: 0;
+  transform: scale(0.95);
+  transition: opacity 0.35s ease, transform 0.35s ease;
+  pointer-events: none;
+}
+
+.skills-card:hover::after {
+  opacity: 1;
+  transform: scale(1) translate(8px, 8px);
+}
+
+.skills-card:hover::before {
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.08), transparent 35%, rgba(255, 255, 255, 0.12) 65%);
+}
+
+.skills-card-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.skills-card-header svg {
+  width: 28px;
+  height: 28px;
+  stroke: var(--primary);
+}
+
+.skills-list {
+  display: grid;
+  gap: 16px;
+}
+
+.skill-chips-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px;
+}
+
+.skill-chip-columns {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+  align-items: start;
+  min-width: 0;
+}
+
+.skill-category {
+  display: grid;
+  gap: 20px;
+  min-width: 0;
+}
+
+.skill-category h4 {
+  margin-bottom: 0;
+  color: var(--text-light);
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.skill-chip {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 16px;
+  width: 100%;
+  min-height: 68px;
+  padding: 16px 18px;
+  border-radius: 26px;
+  background: rgba(255, 255, 255, 0.045);
+  border: 2px solid rgba(255, 255, 255, 0.18);
+  color: var(--text-main);
+  font-weight: 700;
+  transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease, box-shadow 0.3s ease;
+  cursor: default;
+  box-shadow: inset 0 0 0 rgba(255, 255, 255, 0.03);
+}
+
+.skill-chip:hover {
+  transform: translateY(-6px) scale(1.01);
+  background: rgba(0, 242, 254, 0.14);
+  border-color: rgba(0, 242, 254, 0.36);
+  box-shadow: 0 18px 34px rgba(0, 242, 254, 0.18);
+}
+
+.skill-chip-icon {
+  width: 56px;
+  height: 56px;
+  min-width: 56px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  color: #fff;
+  font-size: 1.45rem;
+  font-weight: 800;
+  box-shadow: inset 0 -4px 14px rgba(0, 0, 0, 0.3);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.skill-chip:hover .skill-chip-icon {
+  transform: scale(1.05);
+}
+
+.skills-card .skills-badges {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
 .skills-grid .skills-card:nth-child(2) .skill-progress-bar {
   background: linear-gradient(90deg, var(--secondary), var(--accent));
 }
@@ -1130,9 +1265,8 @@ section {
 }
 
 .skills-badges {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
+  display: grid;
+  gap: 16px;
 }
 
 .skill-badge {
@@ -1160,11 +1294,50 @@ section {
 /* 5. Projects Section */
 .projects-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(480px, 1fr));
+  grid-template-columns: repeat(2, minmax(320px, 1fr));
+  justify-content: center;
   gap: 40px;
+  width: 100%;
 }
 
-@media (max-width: 768px) {
+.project-instruction {
+  margin-top: 16px;
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  text-align: center;
+  max-width: 680px;
+  margin-left: auto;
+  margin-right: auto;
+  transition: color 0.35s ease, text-shadow 0.35s ease;
+}
+
+.project-instruction-action {
+  color: var(--secondary);
+  font-weight: 700;
+  text-decoration: underline solid rgba(84, 234, 255, 0.8);
+  text-underline-offset: 4px;
+  text-decoration-thickness: 2px;
+}
+
+.project-instruction.highlight {
+  color: var(--secondary);
+  animation: instruction-glow 1.8s ease-in-out infinite alternate;
+}
+
+.project-instruction.highlight .project-instruction-action {
+  text-shadow: 0 0 14px rgba(0, 242, 254, 0.7);
+}
+
+@keyframes instruction-glow {
+  from {
+    text-shadow: 0 0 0 rgba(0, 242, 254, 0);
+  }
+  to {
+    text-shadow: 0 0 22px rgba(0, 242, 254, 0.6);
+  }
+}
+
+@media (max-width: 1024px) {
   .projects-grid {
     grid-template-columns: 1fr;
   }
@@ -1174,6 +1347,9 @@ section {
   display: flex;
   flex-direction: column;
   height: 100%;
+  width: 100%;
+  max-width: 760px;
+  cursor: pointer;
 }
 
 .project-img-wrapper {
@@ -1258,6 +1434,15 @@ section {
   list-style: none;
   font-size: 0.9rem;
   color: var(--text-main);
+}
+
+.project-card.hidden-card {
+  display: none;
+}
+
+.project-card.revealed-card {
+  border: 1px solid rgba(0, 242, 254, 0.18);
+  box-shadow: 0 30px 70px rgba(0, 242, 254, 0.12);
 }
 
 .project-features li::before {
@@ -1385,6 +1570,15 @@ section {
   display: flex;
   align-items: center;
   gap: 20px;
+  cursor: pointer;
+  transition: transform 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease, background 0.35s ease;
+}
+
+.contact-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--card-border-glow);
+  box-shadow: 0 20px 40px rgba(10, 5, 25, 0.5), 0 0 30px var(--primary-glow);
+  background: rgba(255, 255, 255, 0.08);
 }
 
 .contact-icon-box {
@@ -1409,6 +1603,17 @@ section {
 .contact-icon-box svg {
   width: 20px;
   height: 20px;
+}
+
+.email-link {
+  color: var(--text-light);
+  font-weight: 700;
+  transition: color 0.25s ease, text-decoration-color 0.25s ease;
+}
+
+.email-link:hover {
+  color: var(--secondary);
+  text-decoration: underline;
 }
 
 .contact-details h4 {
