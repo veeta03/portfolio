@@ -484,35 +484,46 @@ function initCardGlowEffect() {
 
 function initProjectCardToggle() {
   const projectCards = Array.from(document.querySelectorAll('.projects-grid .project-card'));
-  if (projectCards.length < 2) return;
+  if (!projectCards.length) return;
 
-  let visibleCount = 1;
-  projectCards.slice(1).forEach(card => card.classList.add('hidden-card'));
+  projectCards.forEach(card => {
+    card.classList.add('project-hidden');
+  });
+
+  const projectSection = document.getElementById('projects');
+  if (!projectSection) return;
+
+  const observer = new IntersectionObserver((entries, observerRef) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        revealProjectCardsSequentially(projectCards);
+        observerRef.disconnect();
+      }
+    });
+  }, {
+    threshold: 0.2,
+    rootMargin: '0px 0px -120px 0px'
+  });
+
+  observer.observe(projectSection);
 
   const instruction = document.querySelector('.project-instruction');
   if (instruction) {
-    instruction.classList.add('highlight');
-    instruction.innerHTML = '<span class="project-instruction-action">Click on project</span> to view more.';
+    instruction.classList.remove('highlight');
+    instruction.innerHTML = 'Scroll down and watch featured projects reveal one by one.';
   }
+}
 
-  projectCards[0].classList.add('revealed-card');
-
-  projectCards[0].addEventListener('click', () => {
-    if (visibleCount >= projectCards.length) return;
-
-    const nextCard = projectCards[visibleCount];
-    nextCard.classList.remove('hidden-card');
-    nextCard.classList.add('revealed-card');
-    visibleCount += 1;
-
-    if (instruction) {
-      if (visibleCount === projectCards.length) {
-        instruction.textContent = 'All featured projects are now visible.';
-        instruction.classList.remove('highlight');
-      } else {
-        instruction.textContent = 'Nice! Click again to view the next project.';
-      }
-    }
+function revealProjectCardsSequentially(cards) {
+  cards.forEach((card, index) => {
+    setTimeout(() => {
+      card.classList.remove('project-hidden');
+      card.classList.add('revealed');
+      card.classList.add('pop-in');
+      setTimeout(() => {
+        card.classList.remove('pop-in');
+      }, 600);
+    }, index * 5000);
   });
 }
 
